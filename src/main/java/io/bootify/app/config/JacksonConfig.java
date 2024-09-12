@@ -1,4 +1,4 @@
-package io.bootify.my_app.config;
+package io.bootify.app.config;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.SerializationFeature;

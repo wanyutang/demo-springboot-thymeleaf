@@ -1,6 +1,6 @@
-package io.bootify.my_app.repos;
+package io.bootify.app.repos;
 
-import io.bootify.my_app.domain.Role;
+import io.bootify.app.domain.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 

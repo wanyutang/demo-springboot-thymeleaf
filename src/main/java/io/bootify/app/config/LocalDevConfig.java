@@ -1,4 +1,4 @@
-package io.bootify.my_app.config;
+package io.bootify.app.config;
 
 import java.io.File;
 import java.io.IOException;

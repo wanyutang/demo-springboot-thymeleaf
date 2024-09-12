@@ -1,4 +1,4 @@
-package io.bootify.my_app.controller;
+package io.bootify.app.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

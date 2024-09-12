@@ -1,4 +1,4 @@
-package io.bootify.my_app.util;
+package io.bootify.app.util;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.MessageSource;

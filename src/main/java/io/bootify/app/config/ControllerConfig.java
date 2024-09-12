@@ -1,4 +1,4 @@
-package io.bootify.my_app.config;
+package io.bootify.app.config;
 
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.web.bind.WebDataBinder;

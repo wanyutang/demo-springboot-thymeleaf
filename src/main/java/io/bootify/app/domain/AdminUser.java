@@ -1,15 +1,10 @@
-package io.bootify.my_app.domain;
+package io.bootify.app.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import java.time.OffsetDateTime;
 import java.util.Set;
@@ -19,26 +14,16 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 
 @Entity
-@Table(name = "Roles")
+@Table(name = "AdminUsers")
 @EntityListeners(AuditingEntityListener.class)
-public class Role {
+public class AdminUser {
 
     @Id
-    @Column(nullable = false, updatable = false)
-    @SequenceGenerator(
-            name = "primary_sequence",
-            sequenceName = "primary_sequence",
-            allocationSize = 1,
-            initialValue = 10000
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "primary_sequence"
-    )
-    private Integer roleId;
+    @Column(nullable = false, updatable = false, length = 100)
+    private String userId;
 
     @Column(nullable = false, length = 50)
-    private String roleName;
+    private String userName;
 
     @Column(length = 100)
     private String updateUser;
@@ -52,16 +37,11 @@ public class Role {
     @Column
     private OffsetDateTime createDate;
 
-    @ManyToMany(mappedBy = "groupRoleRoles")
-    private Set<Group> groupRoleGroups;
+    @ManyToMany(mappedBy = "groupUserAdminUsers")
+    private Set<Group> groupUserGroups;
 
-    @ManyToMany
-    @JoinTable(
-            name = "UserRoles",
-            joinColumns = @JoinColumn(name = "roleId"),
-            inverseJoinColumns = @JoinColumn(name = "userId")
-    )
-    private Set<AdminUser> userRoleAdminUsers;
+    @ManyToMany(mappedBy = "userRoleAdminUsers")
+    private Set<Role> userRoleRoles;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
@@ -71,20 +51,20 @@ public class Role {
     @Column(nullable = false)
     private OffsetDateTime lastUpdated;
 
-    public Integer getRoleId() {
-        return roleId;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setRoleId(final Integer roleId) {
-        this.roleId = roleId;
+    public void setUserId(final String userId) {
+        this.userId = userId;
     }
 
-    public String getRoleName() {
-        return roleName;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setRoleName(final String roleName) {
-        this.roleName = roleName;
+    public void setUserName(final String userName) {
+        this.userName = userName;
     }
 
     public String getUpdateUser() {
@@ -119,20 +99,20 @@ public class Role {
         this.createDate = createDate;
     }
 
-    public Set<Group> getGroupRoleGroups() {
-        return groupRoleGroups;
+    public Set<Group> getGroupUserGroups() {
+        return groupUserGroups;
     }
 
-    public void setGroupRoleGroups(final Set<Group> groupRoleGroups) {
-        this.groupRoleGroups = groupRoleGroups;
+    public void setGroupUserGroups(final Set<Group> groupUserGroups) {
+        this.groupUserGroups = groupUserGroups;
     }
 
-    public Set<AdminUser> getUserRoleAdminUsers() {
-        return userRoleAdminUsers;
+    public Set<Role> getUserRoleRoles() {
+        return userRoleRoles;
     }
 
-    public void setUserRoleAdminUsers(final Set<AdminUser> userRoleAdminUsers) {
-        this.userRoleAdminUsers = userRoleAdminUsers;
+    public void setUserRoleRoles(final Set<Role> userRoleRoles) {
+        this.userRoleRoles = userRoleRoles;
     }
 
     public OffsetDateTime getDateCreated() {

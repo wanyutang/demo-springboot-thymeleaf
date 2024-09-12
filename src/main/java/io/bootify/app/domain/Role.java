@@ -1,4 +1,4 @@
-package io.bootify.my_app.domain;
+package io.bootify.app.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -6,18 +6,22 @@ import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import java.time.OffsetDateTime;
+import java.util.Set;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 
 @Entity
-@Table(name = "Menus")
+@Table(name = "Roles")
 @EntityListeners(AuditingEntityListener.class)
-public class Menu {
+public class Role {
 
     @Id
     @Column(nullable = false, updatable = false)
@@ -31,22 +35,10 @@ public class Menu {
             strategy = GenerationType.SEQUENCE,
             generator = "primary_sequence"
     )
-    private Integer menuId;
+    private Integer roleId;
 
     @Column(nullable = false, length = 50)
-    private String functionCode;
-
-    @Column(nullable = false, length = 50)
-    private String displayName;
-
-    @Column
-    private Integer sort;
-
-    @Column
-    private Integer parentId;
-
-    @Column(length = 200)
-    private String url;
+    private String roleName;
 
     @Column(length = 100)
     private String updateUser;
@@ -54,14 +46,22 @@ public class Menu {
     @Column
     private OffsetDateTime updateDate;
 
-    @Column(nullable = false, length = 100)
+    @Column(length = 100)
     private String createUser;
 
-    @Column(nullable = false)
+    @Column
     private OffsetDateTime createDate;
 
-    @Column(length = 15)
-    private String icon;
+    @ManyToMany(mappedBy = "groupRoleRoles")
+    private Set<Group> groupRoleGroups;
+
+    @ManyToMany
+    @JoinTable(
+            name = "UserRoles",
+            joinColumns = @JoinColumn(name = "roleId"),
+            inverseJoinColumns = @JoinColumn(name = "userId")
+    )
+    private Set<AdminUser> userRoleAdminUsers;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
@@ -71,52 +71,20 @@ public class Menu {
     @Column(nullable = false)
     private OffsetDateTime lastUpdated;
 
-    public Integer getMenuId() {
-        return menuId;
+    public Integer getRoleId() {
+        return roleId;
     }
 
-    public void setMenuId(final Integer menuId) {
-        this.menuId = menuId;
+    public void setRoleId(final Integer roleId) {
+        this.roleId = roleId;
     }
 
-    public String getFunctionCode() {
-        return functionCode;
+    public String getRoleName() {
+        return roleName;
     }
 
-    public void setFunctionCode(final String functionCode) {
-        this.functionCode = functionCode;
-    }
-
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    public void setDisplayName(final String displayName) {
-        this.displayName = displayName;
-    }
-
-    public Integer getSort() {
-        return sort;
-    }
-
-    public void setSort(final Integer sort) {
-        this.sort = sort;
-    }
-
-    public Integer getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(final Integer parentId) {
-        this.parentId = parentId;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(final String url) {
-        this.url = url;
+    public void setRoleName(final String roleName) {
+        this.roleName = roleName;
     }
 
     public String getUpdateUser() {
@@ -151,12 +119,20 @@ public class Menu {
         this.createDate = createDate;
     }
 
-    public String getIcon() {
-        return icon;
+    public Set<Group> getGroupRoleGroups() {
+        return groupRoleGroups;
     }
 
-    public void setIcon(final String icon) {
-        this.icon = icon;
+    public void setGroupRoleGroups(final Set<Group> groupRoleGroups) {
+        this.groupRoleGroups = groupRoleGroups;
+    }
+
+    public Set<AdminUser> getUserRoleAdminUsers() {
+        return userRoleAdminUsers;
+    }
+
+    public void setUserRoleAdminUsers(final Set<AdminUser> userRoleAdminUsers) {
+        this.userRoleAdminUsers = userRoleAdminUsers;
     }
 
     public OffsetDateTime getDateCreated() {
